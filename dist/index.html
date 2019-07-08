@@ -1,0 +1,168 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+      #multi{
+        border: 1px solid #eee;  
+        margin: auto;
+        height: 160px;
+        font-size: 30px;
+        padding:0px;
+        text-align: center;
+        color: green;
+        background-color:#bef441;
+        box-shadow: 0 2px 3px #ccc;
+      }
+      #sw{
+        position:relative;
+        margin-top:2px;
+      }
+      select{
+        position: relative;
+        width:30%;
+        height:20%;
+        /* background-color: #559b2d; */
+        /* color:whitesmoke; */
+        font-weight: bolder;
+        font-size:50%;
+      }
+      #im{
+        width:20%;
+        height:10%;
+      }
+      #wm{
+        margin-top: 3%;
+        font-size:30px;
+        font-weight:bold;
+        text-align:center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div>Hello World</div> -->
+    
+    
+    <div id="multi"> 
+     <p id="sw">SWagger UI</p>
+<p style="font-size: 15px;color:black">Please select API specification</p>
+<select name="url" onchange="selected(this.value)">
+        <option select="selected" value="none"><b>Products/Projects:-</b></option>
+        <optgroup label="Phoenix">
+        <option value="https://gsm-dev-thoth.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Thoth(Master Data)</option>
+        <option value="https://gsm-dev-sherlock.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Sherlock(Search Service)</option>
+        <option value="https://citadel.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Citadel(Sup Service)</option>
+        <option value="https://gsm-invitation.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Invitation Service</option>yml
+        <option value="https://mithras.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Mithras(Contract Service)</option>
+        <option value="https://raven.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Raven(Communication Service)</option>
+      </optgroup>>
+      <optgroup label="AMA">
+        <option value="https://ama-invitation.dev01.gbs.ase.southcentralus.us.walmart.net/v2/api-docs">Ama Invitation</option>
+<!--       </optgroup>
+           <optgroup label="GSM">
+          <option value="https://gist.githubusercontent.com/Debanik-98/fa7ebb4896442267de8b567a4292fc99/raw/8c33ba210e110b2427710bee86e05f784e47943b/stripe.yml">ex1</option>
+          <option value="https://gist.githubusercontent.com/Debanik-98/9df04eeea685c7f60eab14afdd192871/raw/62e84c9d4c7a3d73660e4f412bea79864ec95899/openapi.yml">ex2</option>  
+      </optgroup> -->
+      <optgroup label="Debanik">
+        <option value="https://gist.githubusercontent.com/Debanik-98/619136d83a6d8eaec8826c2a2f6af5f0/raw/2144a46dbad57964fec069244dfca0bb0ce698bb/fox1.yml">Sample SpringBoot Application</option>
+      </optgroup>
+      </select>
+    <!-- <button onclick="selected()"> EXPLORE!</button> -->
+    <br><br>
+    </div>
+<div id="wm">
+  Customised for Walmart
+  <img id="im" src="wm.png"/>
+</div>
+
+    <div id="swagger-ui"></div>
+    <script src="./swagger-ui-bundle.js"> </script>
+    <script src="./swagger-ui-standalone-preset.js"> </script>
+    <script>
+    var work= function(nurl) {
+      // Begin Swagger UI call region
+      console.log(nurl);
+      const ui = SwaggerUIBundle({
+        url: nurl,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      })
+      // End Swagger UI call region
+
+     // window.ui = ui
+    }
+    //work("https://gist.githubusercontent.com/Debanik-98/fa7ebb4896442267de8b567a4292fc99/raw/8c33ba210e110b2427710bee86e05f784e47943b/stripe.yml");
+//work("https://petstore.swagger.io/v2/swagger.json");
+    function selected(val)
+    {
+      del(val);
+      console.log("You selected "+val);
+      //var d=document.querySelector("#wm");,
+      //d.parentNode.removeChild(d);
+      //console.log(d);
+     if(val!="none")
+     {
+      var sw=document.querySelector("#swagger-ui");
+        if(sw.style.display=="none")
+        sw.style.display="block";
+        work(val);
+     }
+    }
+
+function del(val)
+{
+  var d=document.querySelector("#wm");
+  if(d)
+  d.parentElement.removeChild(d);
+  if(!d &&val=="none")
+  {
+    var sw=document.querySelector("#swagger-ui");
+    sw.style.display="none";
+    var d=document.createElement("div");
+    var t=document.createTextNode("Customised for walmart");
+    d.appendChild(t);
+    var i=document.createElement("img");
+    i.setAttribute("src","wm.png");
+    i.setAttribute("id","im");
+    d.setAttribute("id","wm");
+    d.appendChild(i);
+    document.body.appendChild(d);
+  }
+}
+
+  </script>
+  </body>
+</html>
